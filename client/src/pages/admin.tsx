@@ -1782,24 +1782,24 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 1. Header Settings */}
                       <div className="space-y-4 sm:space-y-6">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 text-xs sm:text-sm font-semibold">1</div>
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 text-blue-400 text-xs sm:text-sm font-semibold">1</div>
                           <div>
                             <h3 className="text-base sm:text-lg font-semibold text-foreground">Header-Einstellungen</h3>
                             <p className="text-xs sm:text-sm text-muted-foreground">Anpassung des oberen Bereichs der Anwendung - wird auf jeder Seite angezeigt</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
+                        <div className="bg-gray-50/50 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
                           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                             {/* Title */}
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700">
                                 Titel <span className="text-red-500">*</span>
                               </label>
                               <Input
                                 value={generalSettings.headerTitle}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, headerTitle: e.target.value })}
                                 placeholder="Smart Redirect Service"
-                                className={`bg-white dark:bg-gray-700 ${!generalSettings.headerTitle?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
+                                className={`bg-white ${!generalSettings.headerTitle?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
                               />
                               <p className="text-xs text-gray-500 mt-1">
                                 Wird als Haupttitel im Header der Anwendung angezeigt
@@ -1808,7 +1808,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             
                             {/* Icon */}
                             <div>
-                              <label className={`block text-sm font-medium mb-2 ${generalSettings.headerLogoUrl ? 'text-gray-400 dark:text-gray-500' : 'text-gray-700 dark:text-gray-300'}`}>
+                              <label className={`block text-sm font-medium mb-2 ${generalSettings.headerLogoUrl ? 'text-gray-400' : 'text-gray-700'}`}>
                                 Icon {generalSettings.headerLogoUrl && '(deaktiviert - Logo wird verwendet)'}
                               </label>
                               <Select 
@@ -1818,8 +1818,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                 }
                                 disabled={!!generalSettings.headerLogoUrl}
                               >
-                                <SelectTrigger className={`${generalSettings.headerLogoUrl ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed' : 'bg-white dark:bg-gray-700'}`}>
-                                  <SelectValue />
+                                <SelectTrigger className={`${generalSettings.headerLogoUrl ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white'}`}>
                                 </SelectTrigger>
                                 <SelectContent>
                                   <SelectItem value="none">🚫 Kein Icon</SelectItem>
@@ -1841,7 +1840,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             
                             {/* Background Color */}
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700">
                                 Hintergrundfarbe
                               </label>
                               <div className="flex items-center gap-3">
@@ -1855,7 +1854,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                   value={generalSettings.headerBackgroundColor}
                                   onChange={(e) => setGeneralSettings({ ...generalSettings, headerBackgroundColor: e.target.value })}
                                   placeholder="#ffffff"
-                                  className="flex-1 bg-white dark:bg-gray-700 font-mono text-sm"
+                                  className={`bg-white ${!generalSettings.headerTitle?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
                                 />
                               </div>
                             </div>
@@ -1864,7 +1863,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           {/* Logo Upload Section */}
                           <div className="pt-4">
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700">
                                 Logo hochladen
                               </label>
                               <div className="space-y-2">
@@ -1957,9 +1956,9 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                 
                                 {/* Logo Preview and Delete */}
                                 {generalSettings.headerLogoUrl && generalSettings.headerLogoUrl.trim() !== "" && (
-                                  <div className="space-y-3 p-3 bg-gray-50 dark:bg-gray-800 border rounded-lg">
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                  <div className="space-y-3 p-3 bg-gray-50  border rounded-lg">
+                                    <div className="bg-gray-50/50 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
+                                      <span className="text-sm font-medium text-gray-700 text-gray-300">
                                         Aktuelles Logo:
                                       </span>
                                       <Button 
@@ -2028,7 +2027,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                         Löschen
                                       </Button>
                                     </div>
-                                    <div className="flex justify-center p-4 bg-white dark:bg-gray-700 border rounded">
+                                    <div className="flex justify-center p-4 bg-white  border rounded">
                                       <img 
                                         src={generalSettings.headerLogoUrl} 
                                         alt="Header Logo" 
@@ -2040,7 +2039,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                     </div>
                                     <div className="flex items-center gap-2 justify-center">
                                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                      <span className="text-xs text-green-700 dark:text-green-300">
+                                      <span className="text-xs text-green-700 text-green-300">
                                         Logo aktiv - wird anstelle des Icons angezeigt
                                       </span>
                                     </div>
@@ -2055,21 +2054,21 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 2. PopUp Content Settings */}
                       <div className="space-y-4 sm:space-y-6">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400 text-xs sm:text-sm font-semibold">2</div>
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-100 bg-green-900/30 rounded-full flex items-center justify-center text-green-600 text-green-400 text-xs sm:text-sm font-semibold">2</div>
                           <div>
                             <h3 className="text-base sm:text-lg font-semibold text-foreground">PopUp-Einstellungen</h3>
                             <p className="text-xs sm:text-sm text-muted-foreground">Dialog-Fenster das automatisch erscheint, wenn ein Nutzer eine veraltete URL aufruft</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
-                          <div>
-                            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                        <div className="bg-gray-50/50 /30 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
+                          <div className="bg-gray-50/50 rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
+                            <label className="block text-sm font-medium mb-2 text-gray-700">
                               PopUp-Anzeige
                             </label>
                             <Select value={generalSettings.popupMode} onValueChange={(value) =>
                               setGeneralSettings({ ...generalSettings, popupMode: value as any })
                             }>
-                              <SelectTrigger className="bg-white dark:bg-gray-700">
+                              <SelectTrigger className="bg-white">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
@@ -2082,25 +2081,25 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           <div className={`${generalSettings.popupMode === 'disabled' ? 'opacity-50 pointer-events-none' : ''} space-y-4 sm:space-y-6`}>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700">
                                 Titel <span className="text-red-500">*</span>
                               </label>
                               <Input
                                 value={generalSettings.mainTitle}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, mainTitle: e.target.value })}
                                 placeholder="URL veraltet - Aktualisierung erforderlich"
-                                className={`bg-white dark:bg-gray-700 ${!generalSettings.mainTitle?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
+                                className={`bg-white ${!generalSettings.headerTitle?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
                                 disabled={generalSettings.popupMode === 'disabled'}
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700">
                                 Icon
                               </label>
                               <Select value={generalSettings.alertIcon} onValueChange={(value) =>
                                 setGeneralSettings({ ...generalSettings, alertIcon: value as any })
                               } disabled={generalSettings.popupMode === 'disabled'}>
-                                <SelectTrigger className="bg-white dark:bg-gray-700">
+                                <SelectTrigger className="bg-white">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -2113,7 +2112,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             </div>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                               Beschreibung <span className="text-red-500">*</span>
                             </label>
                             <Textarea
@@ -2121,7 +2120,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                               onChange={(e) => setGeneralSettings({ ...generalSettings, mainDescription: e.target.value })}
                               placeholder="Du verwendest einen alten Link. Dieser Link ist nicht mehr aktuell und wird bald nicht mehr funktionieren. Bitte verwende die neue URL und aktualisiere deine Verknüpfungen."
                               rows={3}
-                              className={`bg-white dark:bg-gray-700 ${!generalSettings.mainDescription?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
+                              className={`bg-white ${!generalSettings.mainDescription?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
                               disabled={generalSettings.popupMode === 'disabled'}
                             />
                             <p className="text-xs text-gray-500 mt-1">
@@ -2129,14 +2128,14 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             </p>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                               PopUp Button-Text
                             </label>
                             <Input
                               value={generalSettings.popupButtonText}
                               onChange={(e) => setGeneralSettings({ ...generalSettings, popupButtonText: e.target.value })}
                               placeholder="Zeige mir die neue URL"
-                              className="bg-white dark:bg-gray-700"
+                              className="bg-white"
                               disabled={generalSettings.popupMode === 'disabled'}
                             />
                             <p className="text-xs text-gray-500 mt-1">
@@ -2145,13 +2144,13 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Alert-Hintergrundfarbe
                               </label>
                               <Select value={generalSettings.alertBackgroundColor} onValueChange={(value) =>
                                 setGeneralSettings({ ...generalSettings, alertBackgroundColor: value as any })
                               } disabled={generalSettings.popupMode === 'disabled'}>
-                                <SelectTrigger className="bg-white dark:bg-gray-700">
+                                <SelectTrigger className="bg-white">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -2164,7 +2163,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                               </Select>
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Hauptinhalt-Hintergrundfarbe
                               </label>
                               <div className="flex items-center gap-3">
@@ -2179,7 +2178,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                   value={generalSettings.mainBackgroundColor}
                                   onChange={(e) => setGeneralSettings({ ...generalSettings, mainBackgroundColor: e.target.value })}
                                   placeholder="#ffffff"
-                                  className="flex-1 bg-white dark:bg-gray-700 font-mono text-sm"
+                                  className="flex-1 bg-white"
                                   disabled={generalSettings.popupMode === 'disabled'}
                                 />
                               </div>
@@ -2192,36 +2191,36 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 3. URL Comparison Settings */}
                       <div className="space-y-6">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm font-semibold">3</div>
+                          <div className="w-8 h-8 bg-purple-100 bg-purple-900/30 rounded-full flex items-center justify-center text-purple-600 text-purple-400 text-sm font-semibold">3</div>
                           <div>
                             <h3 className="text-lg font-semibold text-foreground">URL-Vergleich</h3>
                             <p className="text-sm text-muted-foreground">Bereich für alte/neue URL-Gegenüberstellung</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-6 space-y-6">
+                        <div className="bg-gray-50/50 /30 rounded-lg p-6 space-y-6">
                           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                             {/* Title */}
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Titel
                               </label>
                               <Input
                                 value={generalSettings.urlComparisonTitle}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, urlComparisonTitle: e.target.value })}
                                 placeholder="Zu verwendende URL"
-                                className="bg-white dark:bg-gray-700"
+                                className="bg-white"
                               />
                             </div>
                             
                             {/* Icon */}
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Icon
                               </label>
                               <Select value={generalSettings.urlComparisonIcon} onValueChange={(value) => 
                                 setGeneralSettings({ ...generalSettings, urlComparisonIcon: value as any })
                               }>
-                                <SelectTrigger className="bg-white dark:bg-gray-700">
+                                <SelectTrigger className="bg-white">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -2244,7 +2243,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             
                             {/* Background Color */}
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Hintergrundfarbe
                               </label>
                               <div className="flex items-center gap-3">
@@ -2258,7 +2257,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                   value={generalSettings.urlComparisonBackgroundColor}
                                   onChange={(e) => setGeneralSettings({ ...generalSettings, urlComparisonBackgroundColor: e.target.value })}
                                   placeholder="#ffffff"
-                                  className="flex-1 bg-white dark:bg-gray-700 font-mono text-sm"
+                                  className="flex-1 bg-white  font-mono text-sm"
                                 />
                               </div>
                             </div>
@@ -2267,28 +2266,28 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           {/* URL Labels */}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Label für alte URL
                               </label>
                               <Input
                                 value={generalSettings.oldUrlLabel}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, oldUrlLabel: e.target.value })}
                                 placeholder="Alte aufgerufene URL"
-                                className="bg-white dark:bg-gray-700"
+                                className="bg-white "
                               />
                               <p className="text-xs text-gray-500 mt-1">
                                 Beschriftung für die veraltete URL im Vergleich
                               </p>
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Label für neue URL
                               </label>
                               <Input
                                 value={generalSettings.newUrlLabel}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, newUrlLabel: e.target.value })}
                                 placeholder="Neue URL"
-                                className="bg-white dark:bg-gray-700"
+                                className="bg-white "
                               />
                               <p className="text-xs text-gray-500 mt-1">
                                 Beschriftung für die neue/aktuelle URL im Vergleich
@@ -2298,14 +2297,14 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           
                           {/* Default Domain */}
                           <div>
-                            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                               Standard neue Domain
                             </label>
                             <Input
                               value={generalSettings.defaultNewDomain}
                               onChange={(e) => setGeneralSettings({ ...generalSettings, defaultNewDomain: e.target.value })}
                               placeholder="https://newapplicationurl.com/"
-                              className="bg-white dark:bg-gray-700"
+                              className="bg-white "
                             />
                             <p className="text-xs text-gray-500 mt-1">
                               Domain die verwendet wird wenn keine spezielle URL-Regel greift - der Pfad wird automatisch übernommen
@@ -2313,13 +2312,13 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           </div>
 
                           {/* Show Link Quality Gauge Setting */}
-                          <div className="space-y-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                          <div className="space-y-4 p-4 bg-green-50 bg-green-900/20 border border-green-200 border-green-800 rounded-lg">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
-                                <BarChart3 className="h-5 w-5 text-green-600 dark:text-green-400" />
+                                <BarChart3 className="h-5 w-5 text-green-600 text-green-400" />
                                 <div>
-                                  <p className="text-sm font-medium text-green-800 dark:text-green-200">Link-Qualitätstacho anzeigen</p>
-                                  <p className="text-xs text-green-700 dark:text-green-300">
+                                  <p className="text-sm font-medium text-green-800 text-green-200">Link-Qualitätstacho anzeigen</p>
+                                  <p className="text-xs text-green-700 text-green-300">
                                     Zeigt ein Symbol mit der Qualität der URL-Übereinstimmung auf der Migrationsseite an
                                   </p>
                                 </div>
@@ -2335,59 +2334,59 @@ export default function AdminPage({ onClose }: AdminPageProps) {
 
                             {/* Match Explanation Texts */}
                             {generalSettings.showLinkQualityGauge && (
-                              <div className="pt-4 mt-4 border-t border-green-200 dark:border-green-800 space-y-4">
+                              <div className="pt-4 mt-4 border-t border-green-200 border-green-800 space-y-4">
                                 <div>
-                                  <label className="block text-sm font-medium mb-1 text-green-800 dark:text-green-200">
+                                  <label className="block text-sm font-medium mb-1 text-green-800 text-green-200">
                                     Text für hohe Übereinstimmung (≥ 90%)
                                   </label>
                                   <Input
                                     value={generalSettings.matchHighExplanation}
                                     onChange={(e) => setGeneralSettings({ ...generalSettings, matchHighExplanation: e.target.value })}
-                                    className="bg-white dark:bg-gray-800"
+                                    className="bg-white "
                                     placeholder="Die neue URL entspricht exakt der angeforderten Seite oder ist die Startseite. Höchste Qualität."
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium mb-1 text-green-800 dark:text-green-200">
+                                  <label className="block text-sm font-medium mb-1 text-green-800 text-green-200">
                                     Text für mittlere Übereinstimmung (≥ 60%)
                                   </label>
                                   <Input
                                     value={generalSettings.matchMediumExplanation}
                                     onChange={(e) => setGeneralSettings({ ...generalSettings, matchMediumExplanation: e.target.value })}
-                                    className="bg-white dark:bg-gray-800"
+                                    className="bg-white "
                                     placeholder="Die URL wurde erkannt, weicht aber leicht ab (z.B. zusätzliche Parameter)."
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium mb-1 text-green-800 dark:text-green-200">
+                                  <label className="block text-sm font-medium mb-1 text-green-800 text-green-200">
                                     Text für niedrige Übereinstimmung (Partial Match)
                                   </label>
                                   <Input
                                     value={generalSettings.matchLowExplanation}
                                     onChange={(e) => setGeneralSettings({ ...generalSettings, matchLowExplanation: e.target.value })}
-                                    className="bg-white dark:bg-gray-800"
+                                    className="bg-white "
                                     placeholder="Es wurde nur ein Teil der URL erkannt und ersetzt (Partial Match)."
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium mb-1 text-green-800 dark:text-green-200">
+                                  <label className="block text-sm font-medium mb-1 text-green-800 text-green-200">
                                     Text für Startseiten-Übereinstimmung (Root)
                                   </label>
                                   <Input
                                     value={generalSettings.matchRootExplanation}
                                     onChange={(e) => setGeneralSettings({ ...generalSettings, matchRootExplanation: e.target.value })}
-                                    className="bg-white dark:bg-gray-800"
+                                    className="bg-white "
                                     placeholder="Startseite erkannt. Direkte Weiterleitung auf die neue Domain."
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium mb-1 text-green-800 dark:text-green-200">
+                                  <label className="block text-sm font-medium mb-1 text-green-800 text-green-200">
                                     Text für keine Übereinstimmung
                                   </label>
                                   <Input
                                     value={generalSettings.matchNoneExplanation}
                                     onChange={(e) => setGeneralSettings({ ...generalSettings, matchNoneExplanation: e.target.value })}
-                                    className="bg-white dark:bg-gray-800"
+                                    className="bg-white "
                                     placeholder="Die URL konnte nicht spezifisch zugeordnet werden. Es wird auf die Standard-Seite weitergeleitet."
                                   />
                                 </div>
@@ -2399,28 +2398,28 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           <div className="pt-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                               <div>
-                                <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                                <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                   Button-Text "URL kopieren"
                                 </label>
                                 <Input
                                   value={generalSettings.copyButtonText}
                                   onChange={(e) => setGeneralSettings({ ...generalSettings, copyButtonText: e.target.value })}
                                   placeholder="URL kopieren"
-                                  className="bg-white dark:bg-gray-700"
+                                  className="bg-white "
                                 />
                                 <p className="text-xs text-gray-500 mt-1">
                                   Kopiert die neue URL in die Zwischenablage
                                 </p>
                               </div>
                               <div>
-                                <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                                <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                   Button-Text "In neuem Tab öffnen"
                                 </label>
                                 <Input
                                   value={generalSettings.openButtonText}
                                   onChange={(e) => setGeneralSettings({ ...generalSettings, openButtonText: e.target.value })}
                                   placeholder="In neuem Tab öffnen"
-                                  className="bg-white dark:bg-gray-700"
+                                  className="bg-white "
                                 />
                                 <p className="text-xs text-gray-500 mt-1">
                                   Öffnet die neue URL in einem neuen Browser-Tab
@@ -2430,9 +2429,9 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           </div>
                           
                           {/* Special Hints Sub-section */}
-                          <div className="pt-8 border-t border-gray-200 dark:border-gray-700">
+                          <div className="pt-8 border-t border-gray-200 border-gray-700">
                             <div className="flex items-center gap-3 mb-6">
-                              <div className="w-6 h-6 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center text-orange-600 dark:text-orange-400 text-xs font-semibold">3.1</div>
+                              <div className="w-6 h-6 bg-orange-100 bg-orange-900/30 rounded-full flex items-center justify-center text-orange-600 text-orange-400 text-xs font-semibold">3.1</div>
                               <div>
                                 <h4 className="text-base font-semibold text-foreground">Spezielle Hinweise</h4>
                                 <p className="text-sm text-muted-foreground">Zusatzbereich der immer sichtbar ist</p>
@@ -2440,24 +2439,24 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Titel
                               </label>
                               <Input
                                 value={generalSettings.specialHintsTitle}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, specialHintsTitle: e.target.value })}
                                 placeholder="Bitte beachte folgendes für diese URL:"
-                                className="bg-white dark:bg-gray-700"
+                                className="bg-white "
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Icon
                               </label>
                               <Select value={generalSettings.specialHintsIcon} onValueChange={(value) => 
                                 setGeneralSettings({ ...generalSettings, specialHintsIcon: value as any })
                               }>
-                                <SelectTrigger className="bg-white dark:bg-gray-700">
+                                <SelectTrigger className="bg-white">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -2479,7 +2478,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             </div>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                               Standard-Beschreibung
                             </label>
                             <Textarea
@@ -2487,7 +2486,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                               onChange={(e) => setGeneralSettings({ ...generalSettings, specialHintsDescription: e.target.value })}
                               placeholder="Die neue URL wurde automatisch generiert. Es kann sein, dass sie nicht wie erwartet funktioniert. Falls die URL ungültig ist, nutze bitte die Suchfunktion in der neuen Applikation, um den gewünschten Inhalt zu finden."
                               rows={3}
-                              className={`bg-white dark:bg-gray-700 ${!generalSettings.specialHintsDescription?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
+                              className={`bg-white  ${!generalSettings.specialHintsDescription?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
                             />
                             <p className="text-xs text-muted-foreground mt-1">
                               Wird angezeigt, wenn keine passende URL-Regel aktiv ist
@@ -2500,36 +2499,36 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 4. Additional Information */}
                       <div className="space-y-6">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-sm font-semibold">4</div>
+                          <div className="w-8 h-8 bg-indigo-100 bg-indigo-900/30 rounded-full flex items-center justify-center text-indigo-600 text-indigo-400 text-sm font-semibold">4</div>
                           <div>
                             <h3 className="text-lg font-semibold text-foreground">Zusätzliche Informationen</h3>
                             <p className="text-sm text-muted-foreground">Wird nur angezeigt wenn mindestens ein Info-Punkt konfiguriert ist</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-6 space-y-6">
+                        <div className="bg-gray-50/50 /30 rounded-lg p-6 space-y-6">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Titel der Sektion
                               </label>
                               <Input
                                 value={generalSettings.infoTitle}
                                 onChange={(e) => setGeneralSettings({ ...generalSettings, infoTitle: e.target.value })}
                                 placeholder="Zusätzliche Informationen"
-                                className="bg-white dark:bg-gray-700"
+                                className="bg-white "
                               />
                               <p className="text-xs text-gray-500 mt-1">
                                 Überschrift für den Bereich mit zusätzlichen Informationen
                               </p>
                             </div>
                             <div>
-                              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                                 Icon für den Titel
                               </label>
                               <Select value={generalSettings.infoTitleIcon} onValueChange={(value) => 
                                 setGeneralSettings({ ...generalSettings, infoTitleIcon: value as any })
                               }>
-                                <SelectTrigger className="bg-white dark:bg-gray-700">
+                                <SelectTrigger className="bg-white">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -2552,7 +2551,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           </div>
                           <div>
                             <div className="flex items-center justify-between mb-4">
-                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                              <label className="block text-sm font-medium text-gray-700 text-gray-300">
                                 Informations-Punkte
                               </label>
                               <p className="text-xs text-gray-500 mb-2">
@@ -2563,7 +2562,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                 variant="outline"
                                 size="sm"
                                 onClick={addInfoItem}
-                                className="flex items-center gap-2 bg-white dark:bg-gray-700"
+                                className="flex items-center gap-2 bg-white "
                               >
                                 <Plus className="h-4 w-4" />
                                 <span>Hinzufügen</span>
@@ -2571,7 +2570,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             </div>
                             <div className="space-y-3">
                               {generalSettings.infoItems.map((item, index) => (
-                                <div key={index} className="flex gap-3 items-center p-3 bg-white dark:bg-gray-700 rounded-lg border">
+                                <div key={index} className="flex gap-3 items-center p-3 bg-white  rounded-lg border">
                                   <div className="flex-1">
                                     <Input
                                       value={item}
@@ -2613,7 +2612,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                 </div>
                               ))}
                               {generalSettings.infoItems.length === 0 && (
-                                <div className="text-center p-8 bg-white dark:bg-gray-700 rounded-lg border border-dashed">
+                                <div className="text-center p-8 bg-white  rounded-lg border border-dashed">
                                   <p className="text-sm text-muted-foreground">
                                     Keine Info-Punkte vorhanden. Klicken Sie "Hinzufügen" um welche zu erstellen.
                                   </p>
@@ -2627,22 +2626,22 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 5. Footer Settings */}
                       <div className="space-y-6">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-8 h-8 bg-gray-100 dark:bg-gray-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 text-sm font-semibold">5</div>
+                          <div className="w-8 h-8 bg-gray-100 bg-gray-900/30 rounded-full flex items-center justify-center text-gray-600 text-gray-400 text-sm font-semibold">5</div>
                           <div>
                             <h3 className="text-lg font-semibold text-foreground">Footer</h3>
                             <p className="text-sm text-muted-foreground">Copyright und Fußzeile der Anwendung</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-6 space-y-6">
+                        <div className="bg-gray-50/50 /30 rounded-lg p-6 space-y-6">
                           <div>
-                            <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                            <label className="block text-sm font-medium mb-2 text-gray-700 text-gray-300">
                               Copyright-Text <span className="text-red-500">*</span>
                             </label>
                             <Input
                               value={generalSettings.footerCopyright}
                               onChange={(e) => setGeneralSettings({ ...generalSettings, footerCopyright: e.target.value })}
                               placeholder="Proudly brewed with Generative AI."
-                              className={`bg-white dark:bg-gray-700 ${!generalSettings.footerCopyright?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
+                              className={`bg-white  ${!generalSettings.footerCopyright?.trim() ? 'border-red-500 focus:border-red-500' : ''}`}
                             />
                           </div>
                           
@@ -2653,20 +2652,20 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 6. Link Detection & Performance Settings */}
                       <div className="space-y-6 mt-8">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400 text-sm font-semibold">6</div>
+                          <div className="w-8 h-8 bg-green-100 bg-green-900/30 rounded-full flex items-center justify-center text-green-600 text-green-400 text-sm font-semibold">6</div>
                           <div>
                             <h3 className="text-lg font-semibold text-foreground">Link-Erkennung & Performance</h3>
                             <p className="text-sm text-muted-foreground">Einstellungen zur Erkennungslogik und Systemleistung</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-6 space-y-6">
+                        <div className="bg-gray-50/50 /30 rounded-lg p-6 space-y-6">
                           {/* Case Sensitivity */}
-                          <div className="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                          <div className="flex items-center justify-between p-4 bg-green-50 bg-green-900/20 border border-green-200 border-green-800 rounded-lg">
                             <div className="flex items-center gap-3">
-                              <Search className="h-5 w-5 text-green-600 dark:text-green-400" />
+                              <Search className="h-5 w-5 text-green-600 text-green-400" />
                               <div>
-                                <p className="text-sm font-medium text-green-800 dark:text-green-200">Groß-/Kleinschreibung beachten</p>
-                                <p className="text-xs text-green-700 dark:text-green-300">
+                                <p className="text-sm font-medium text-green-800 text-green-200">Groß-/Kleinschreibung beachten</p>
+                                <p className="text-xs text-green-700 text-green-300">
                                   Wenn aktiviert, werden Regeln nur bei exakt gleicher Schreibweise erkannt. Standard ist deaktiviert.
                                 </p>
                               </div>
@@ -2681,12 +2680,12 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           </div>
 
                           {/* Tracking Cache Toggle */}
-                          <div className="flex items-center justify-between p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg">
+                          <div className="flex items-center justify-between p-4 bg-purple-50 bg-purple-900/20 border border-purple-200 border-purple-800 rounded-lg">
                             <div className="flex items-center gap-3">
-                              <Database className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                              <Database className="h-5 w-5 text-purple-600 text-purple-400" />
                               <div>
-                                <p className="text-sm font-medium text-purple-800 dark:text-purple-200">Tracking-Cache aktivieren (RAM)</p>
-                                <p className="text-xs text-purple-700 dark:text-purple-300">
+                                <p className="text-sm font-medium text-purple-800 text-purple-200">Tracking-Cache aktivieren (RAM)</p>
+                                <p className="text-xs text-purple-700 text-purple-300">
                                   Speichert Statistik-Daten im Arbeitsspeicher für schnellen Zugriff. Erhöht die Systemgeschwindigkeit massiv, benötigt aber mehr RAM bei vielen Daten.
                                 </p>
                               </div>
@@ -2700,10 +2699,10 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             />
                           </div>
 
-                          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                          <div className="bg-blue-50 bg-blue-900/20 border border-blue-200 border-blue-800 rounded-lg p-4">
                             <div className="flex items-start gap-3">
-                              <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
-                              <div className="text-sm text-blue-800 dark:text-blue-200 space-y-2">
+                              <Info className="h-5 w-5 text-blue-600 text-blue-400 mt-0.5" />
+                              <div className="text-sm text-blue-800 text-blue-200 space-y-2">
                                 <p className="font-medium">Empfehlung:</p>
                                 <p>Lassen Sie den Tracking-Cache aktiviert (Standard), es sei denn, Ihr Server hat sehr wenig Arbeitsspeicher (&lt; 512MB) oder Sie haben extrem viele Tracking-Daten (&gt; 1 Mio. Einträge).</p>
                               </div>
@@ -2715,19 +2714,19 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                       {/* 7. Automatic Redirect Settings */}
                       <div className="space-y-6 mt-8">
                         <div className="flex items-center gap-3 border-b pb-3">
-                          <div className="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 dark:text-yellow-400 text-sm font-semibold">7</div>
+                          <div className="w-8 h-8 bg-yellow-100 bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 text-yellow-400 text-sm font-semibold">7</div>
                           <div>
                             <h3 className="text-lg font-semibold text-foreground">Automatische Weiterleitung</h3>
                             <p className="text-sm text-muted-foreground">Globale Einstellungen für automatische Weiterleitungen</p>
                           </div>
                         </div>
-                        <div className="bg-gray-50/50 dark:bg-gray-800/30 rounded-lg p-6 space-y-6">
-                          <div className="flex items-center justify-between p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                        <div className="bg-gray-50/50 /30 rounded-lg p-6 space-y-6">
+                          <div className="flex items-center justify-between p-4 bg-yellow-50 bg-yellow-900/20 border border-yellow-200 border-yellow-800 rounded-lg">
                             <div className="flex items-center gap-3">
-                              <ArrowRightLeft className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                              <ArrowRightLeft className="h-5 w-5 text-yellow-600 text-yellow-400" />
                               <div>
-                                <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">Automatische Weiterleitung aktivieren</p>
-                                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                                <p className="text-sm font-medium text-yellow-800 text-yellow-200">Automatische Weiterleitung aktivieren</p>
+                                <p className="text-xs text-yellow-700 text-yellow-300">
                                   Wenn aktiviert, werden alle Benutzer automatisch zur neuen URL weitergeleitet, ohne die Hinweisseite zu sehen.
                                 </p>
                               </div>
@@ -2746,12 +2745,12 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                             />
                           </div>
 
-                          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                          <div className="bg-blue-50 bg-blue-900/20 border border-blue-200 border-blue-800 rounded-lg p-4">
                             <div className="flex items-start gap-3">
-                              <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
-                              <div className="text-sm text-blue-800 dark:text-blue-200 space-y-2">
+                              <Info className="h-5 w-5 text-blue-600 text-blue-400 mt-0.5" />
+                              <div className="text-sm text-blue-800 text-blue-200 space-y-2">
                                 <p className="font-medium">Admin-Zugriff:</p>
-                                <p>Bei aktivierter automatischer Weiterleitung können Sie die Admin-Einstellungen nur noch über den Parameter <code className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">?admin=true</code> erreichen.</p>
+                                <p>Bei aktivierter automatischer Weiterleitung können Sie die Admin-Einstellungen nur noch über den Parameter <code className="bg-blue-100 bg-blue-800 px-2 py-1 rounded">?admin=true</code> erreichen.</p>
                               </div>
                             </div>
                           </div>
@@ -2848,7 +2847,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                           `${paginatedRulesData?.totalAllRules || totalRules} Regel${(paginatedRulesData?.totalAllRules || totalRules) !== 1 ? 'n' : ''} insgesamt`
                         )}
                         {rulesSearchQuery !== debouncedRulesSearchQuery && (
-                          <span className="ml-2 text-xs text-blue-600 dark:text-blue-400">Suche...</span>
+                          <span className="ml-2 text-xs text-blue-600 text-blue-400">Suche...</span>
                         )}
                       </div>
                       {!rulesLoading && totalFilteredRules > 0 && (
@@ -3057,7 +3056,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                         )
                       )}
                       {statsView === 'browser' && statsSearchQuery !== debouncedStatsSearchQuery && (
-                        <span className="ml-2 text-xs text-blue-600 dark:text-blue-400">Suche...</span>
+                        <span className="ml-2 text-xs text-blue-600 text-blue-400">Suche...</span>
                       )}
                     </div>
                     {!entriesLoading && !top100Loading && (
@@ -3293,12 +3292,12 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg gap-4">
+                            <div className="flex items-center justify-between p-3 bg-blue-50 bg-blue-900/20 border border-blue-200 border-blue-800 rounded-lg gap-4">
                                 <div className="flex items-start gap-3 flex-1">
-                                    <Info className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
+                                    <Info className="h-4 w-4 text-blue-600 text-blue-400 flex-shrink-0 mt-1" />
                                     <div>
-                                        <p className="text-sm font-medium text-blue-800 dark:text-blue-200">URLs automatisch kodieren</p>
-                                        <p className="text-xs text-blue-700 dark:text-blue-300">
+                                        <p className="text-sm font-medium text-blue-800 text-blue-200">URLs automatisch kodieren</p>
+                                        <p className="text-xs text-blue-700 text-blue-300">
                                             Sonderzeichen in URLs automatisch konvertieren (encodeURI)
                                         </p>
                                     </div>
@@ -3352,7 +3351,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                          {/* JSON Rules */}
-                         <div className="space-y-4 border rounded-lg p-4 bg-orange-50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800">
+                         <div className="space-y-4 border rounded-lg p-4 bg-orange-50 bg-orange-900/10 border-orange-200 border-orange-800">
                             <h3 className="font-medium text-foreground flex items-center gap-2">
                                 <Settings className="h-4 w-4" />
                                 Regel-Rohdaten (JSON)
@@ -3789,10 +3788,10 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                     onCheckedChange={(checked) => setRuleForm(prev => ({ ...prev, discardQueryParams: checked }))}
                   />
                   <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-gray-700 text-gray-300">
                       Alle Link-Parameter entfernen
                     </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-gray-500 text-gray-400 mt-1">
                       Wenn aktiviert, werden alle Query-Parameter (z.B. ?id=123) aus der URL entfernt. Standard ist deaktiviert (Parameter werden beibehalten).
                     </p>
                   </div>
@@ -3808,10 +3807,10 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                     onCheckedChange={(checked) => setRuleForm(prev => ({ ...prev, forwardQueryParams: checked }))}
                   />
                   <div className="flex-1">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-gray-700 text-gray-300">
                       Link-Parameter beibehalten
                     </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-gray-500 text-gray-400 mt-1">
                       Wenn aktiviert, werden die ursprünglichen Query-Parameter an die Ziel-URL angehängt. Standard ist deaktiviert (Parameter werden verworfen).
                     </p>
                   </div>
@@ -3826,10 +3825,10 @@ export default function AdminPage({ onClose }: AdminPageProps) {
                   onCheckedChange={(checked) => setRuleForm(prev => ({ ...prev, autoRedirect: checked }))}
                 />
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className="block text-sm font-medium text-gray-700 text-gray-300">
                     Automatische Weiterleitung für diese Regel
                   </label>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <p className="text-xs text-gray-500 text-gray-400 mt-1">
                     Wenn aktiviert, werden Benutzer für URLs, die dieser Regel entsprechen, automatisch weitergeleitet.
                   </p>
                 </div>
@@ -3874,13 +3873,13 @@ export default function AdminPage({ onClose }: AdminPageProps) {
             <p className="text-sm text-muted-foreground">
               Sie sind dabei, die automatische sofortige Weiterleitung für alle Besucher und alle URLs zu aktivieren. Besucher werden so automatisch sofort zur neuen URL ohne Anzeige der Seite weitergeleitet.
             </p>
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+            <div className="bg-blue-50 bg-blue-900/20 border border-blue-200 border-blue-800 rounded-lg p-3">
               <div className="flex items-start gap-3">
-                <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
-                <div className="text-sm text-blue-800 dark:text-blue-200 space-y-2">
+                <Info className="h-5 w-5 text-blue-600 text-blue-400 mt-0.5" />
+                <div className="text-sm text-blue-800 text-blue-200 space-y-2">
                   <p className="font-medium">Wichtiger Hinweis:</p>
-                  <p>Bei aktivierter automatischer Weiterleitung können Benutzer die Admin-Einstellungen nur noch über den URL-Parameter <code className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">?admin=true</code> erreichen.</p>
-                  <p><strong>Beispiel:</strong> <code className="bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded text-xs">{getCurrentBaseUrl()}?admin=true</code></p>
+                  <p>Bei aktivierter automatischer Weiterleitung können Benutzer die Admin-Einstellungen nur noch über den URL-Parameter <code className="bg-blue-100 bg-blue-800 px-2 py-1 rounded text-xs">?admin=true</code> erreichen.</p>
+                  <p><strong>Beispiel:</strong> <code className="bg-blue-100 bg-blue-800 px-2 py-1 rounded text-xs">{getCurrentBaseUrl()}?admin=true</code></p>
                 </div>
               </div>
             </div>
