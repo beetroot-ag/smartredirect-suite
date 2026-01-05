@@ -476,8 +476,9 @@ export default function AdminPage({ onClose }: AdminPageProps) {
     topUrls: Array<{ path: string; count: number }>;
   }>({
     queryKey: ["/api/admin/stats/all", statsFilter],
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && activeTab === 'statistics',
     retry: false,
+    staleTime: 30000,
     queryFn: async () => {
       const params = new URLSearchParams();
       if (statsFilter !== 'all') {
@@ -501,8 +502,9 @@ export default function AdminPage({ onClose }: AdminPageProps) {
   // Top 100 URLs - all entries (non-paginated)
   const { data: topUrlsData, isLoading: top100Loading } = useQuery<Array<{ path: string; count: number }>>({
     queryKey: ["/api/admin/stats/top100", statsFilter],
-    enabled: isAuthenticated && statsView === 'top100',
+    enabled: isAuthenticated && activeTab === 'statistics' && statsView === 'top100',
     retry: false,
+    staleTime: 30000,
     queryFn: async () => {
       const params = new URLSearchParams();
       if (statsFilter !== 'all') {
@@ -523,8 +525,9 @@ export default function AdminPage({ onClose }: AdminPageProps) {
   // Paginated tracking entries with search and sort
   const { data: paginatedEntriesData, isLoading: entriesLoading } = useQuery({
     queryKey: ["/api/admin/stats/entries/paginated", statsPage, statsPerPage, debouncedStatsSearchQuery, sortBy, sortOrder, statsRuleFilter, statsQualityFilter],
-    enabled: isAuthenticated && statsView === 'browser',
+    enabled: isAuthenticated  && activeTab === 'statistics' && statsView === 'browser',
     retry: false,
+    staleTime: 30000,
     queryFn: async () => {
       const params = new URLSearchParams({
         page: statsPage.toString(),
@@ -567,7 +570,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
 
   const { data: settingsData, isLoading: settingsLoading } = useQuery<GeneralSettings>({
     queryKey: ["/api/settings"],
-    enabled: true, // Settings can be fetched without authentication
+    enabled: !isCheckingAuth,
     staleTime: 60000, // 1 minute
     refetchOnWindowFocus: false,
     queryFn: async () => {
@@ -579,9 +582,7 @@ export default function AdminPage({ onClose }: AdminPageProps) {
         console.error("Settings query failed:", response.status, response.statusText);
         throw new Error('Failed to fetch settings');
       }
-      const data = await response.json();
-      console.log("Settings query successful:", data);
-      return data;
+      return response.json();
     },
   });
 
