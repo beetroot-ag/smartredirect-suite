@@ -146,9 +146,38 @@ export class FileStorage implements IStorage {
     defaultValue: T[],
   ): Promise<T[]> {
     try {
+      const stats = await fs.stat(filePath);
+
+      if (stats.size > 10 * 1024 * 1024) {
+        const { createReadStream } = await import('fs');
+
+        return new Promise<T[]>((resolve, reject) => {
+          let buffer = '';
+          const stream = createReadStream(filePath, { encoding: 'utf8', highWaterMark: 64 * 1024 });
+
+          stream.on('data', (chunk: string | Buffer) => {
+            buffer += typeof chunk === 'string' ? chunk : chunk.toString('utf8');
+          });
+
+          stream.on('end', () => {
+            try {
+              const parsed = JSON.parse(buffer);
+              resolve(parsed);
+            }
+            catch (error) {
+              reject(error);
+            }
+          });
+
+          stream.on('error', reject);
+        });
+      }
+
       const data = await fs.readFile(filePath, "utf-8");
+
       return JSON.parse(data);
-    } catch {
+    }
+    catch {
       return defaultValue;
     }
   }
@@ -169,8 +198,20 @@ export class FileStorage implements IStorage {
           this.lastCacheConfig.TRAILING_SLASH_POLICY !== config.TRAILING_SLASH_POLICY;
 
         if (needsReprocess) {
-          // Reprocess existing cache in-place or map
-          this.rulesCache = this.rulesCache.map(rule => preprocessRule(rule, config));
+          const BATCH_SIZE = 1000;
+          const batches = Math.ceil(this.rulesCache.length / BATCH_SIZE);
+
+          for (let i = 0; i < batches; i++) {
+            const start = i * BATCH_SIZE;
+            const end = Math.min(start + BATCH_SIZE, this.rulesCache.length);
+            const batch = this.rulesCache.slice(start, end);
+            const processed = batch.map(rule => preprocessRule(rule, config));
+            this.rulesCache.splice(start, end - start, ...processed);
+
+            if (i < batches - 1) {
+              await new Promise(resolve => setImmediate(resolve));
+            }
+          }
           this.lastCacheConfig = config;
         }
       }
@@ -183,15 +224,28 @@ export class FileStorage implements IStorage {
     // Determine config: use provided or fetch settings to build default
     let effectiveConfig = config;
     if (!effectiveConfig) {
-       const settings = await this.getGeneralSettings();
-       effectiveConfig = {
-         ...RULE_MATCHING_CONFIG,
-         CASE_SENSITIVITY_PATH: settings.caseSensitiveLinkDetection,
-       };
+      const settings = await this.getGeneralSettings();
+      effectiveConfig = {
+        ...RULE_MATCHING_CONFIG,
+        CASE_SENSITIVITY_PATH: settings.caseSensitiveLinkDetection,
+      };
+    }
+
+    const BATCH_SIZE = 1000;
+    const processed: ProcessedUrlRule[] = [];
+
+    for (let i = 0; i < rawRules.length; i += BATCH_SIZE) {
+      const batch = rawRules.slice(i, i + BATCH_SIZE);
+      const processedBatch = batch.map(rule => preprocessRule(rule, effectiveConfig!));
+      processed.push(...processedBatch);
+
+      if (i + BATCH_SIZE < rawRules.length) {
+        await new Promise(resolve => setImmediate(resolve));
+      }
     }
 
     // Process rules
-    this.rulesCache = rawRules.map(rule => preprocessRule(rule, effectiveConfig!));
+    this.rulesCache = processed;
     this.lastCacheConfig = effectiveConfig;
 
     return this.rulesCache;
@@ -609,27 +663,27 @@ export class FileStorage implements IStorage {
       switch (sortBy) {
         case "timestamp":
         default:
-           // Optimized: Use string comparison for ISO dates
-           const tA = a.timestamp || "";
-           const tB = b.timestamp || "";
-           if (tA < tB) comparison = -1;
-           else if (tA > tB) comparison = 1;
-           break;
+          // Optimized: Use string comparison for ISO dates
+          const tA = a.timestamp || "";
+          const tB = b.timestamp || "";
+          if (tA < tB) comparison = -1;
+          else if (tA > tB) comparison = 1;
+          break;
         case "oldUrl":
-           comparison = a.oldUrl.toLowerCase().localeCompare(b.oldUrl.toLowerCase());
-           break;
+          comparison = a.oldUrl.toLowerCase().localeCompare(b.oldUrl.toLowerCase());
+          break;
         case "newUrl":
-           comparison = ((a as any).newUrl || "").toLowerCase().localeCompare(((b as any).newUrl || "").toLowerCase());
-           break;
+          comparison = ((a as any).newUrl || "").toLowerCase().localeCompare(((b as any).newUrl || "").toLowerCase());
+          break;
         case "path":
-           comparison = a.path.toLowerCase().localeCompare(b.path.toLowerCase());
-           break;
+          comparison = a.path.toLowerCase().localeCompare(b.path.toLowerCase());
+          break;
         case "userAgent":
-           comparison = (a.userAgent || "").toLowerCase().localeCompare((b.userAgent || "").toLowerCase());
-           break;
+          comparison = (a.userAgent || "").toLowerCase().localeCompare((b.userAgent || "").toLowerCase());
+          break;
         case "matchQuality":
-           comparison = (a.matchQuality || 0) - (b.matchQuality || 0);
-           break;
+          comparison = (a.matchQuality || 0) - (b.matchQuality || 0);
+          break;
       }
 
       return sortOrder === "asc" ? comparison : -comparison;
@@ -922,8 +976,8 @@ export class FileStorage implements IStorage {
         rulesByMatcher.set(importRule.matcher, index);
         updated++;
       } else if (importRule.id) {
-         // ID provided but not found - create new
-         const newRule: UrlRule = {
+        // ID provided but not found - create new
+        const newRule: UrlRule = {
           id: importRule.id,
           matcher: importRule.matcher,
           targetUrl: importRule.targetUrl,
@@ -942,28 +996,28 @@ export class FileStorage implements IStorage {
         rulesByMatcher.set(newRule.matcher, newIndex);
         imported++;
       } else if (rulesByMatcher.has(importRule.matcher)) {
-         // No ID, but matcher exists - update
-         const index = rulesByMatcher.get(importRule.matcher)!;
-         const existingRule = newRules[index];
+        // No ID, but matcher exists - update
+        const index = rulesByMatcher.get(importRule.matcher)!;
+        const existingRule = newRules[index];
 
-         const updatedRule: UrlRule = {
-           id: existingRule.id,
-           matcher: importRule.matcher,
-           targetUrl: importRule.targetUrl,
-           redirectType: importRule.redirectType,
-           infoText: importRule.infoText || "",
-           createdAt: existingRule.createdAt,
-           autoRedirect: importRule.autoRedirect,
-           discardQueryParams: importRule.discardQueryParams,
-           forwardQueryParams: importRule.forwardQueryParams,
-         };
+        const updatedRule: UrlRule = {
+          id: existingRule.id,
+          matcher: importRule.matcher,
+          targetUrl: importRule.targetUrl,
+          redirectType: importRule.redirectType,
+          infoText: importRule.infoText || "",
+          createdAt: existingRule.createdAt,
+          autoRedirect: importRule.autoRedirect,
+          discardQueryParams: importRule.discardQueryParams,
+          forwardQueryParams: importRule.forwardQueryParams,
+        };
 
-         // Sanitize flags
-         sanitizeRuleFlags(updatedRule);
+        // Sanitize flags
+        sanitizeRuleFlags(updatedRule);
 
-         newRules[index] = preprocessRule(updatedRule, config);
-         // Matcher index is already correct
-         updated++;
+        newRules[index] = preprocessRule(updatedRule, config);
+        // Matcher index is already correct
+        updated++;
       } else {
         // Create new rule with generated ID
         const newRule: UrlRule = {
